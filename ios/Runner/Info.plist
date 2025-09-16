@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>كابتن ودني</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>7.0</string>
+	<key>CFBundleName</key>
+	<string>كابتن ودني</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.14</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.328097407117-tf0hqgah6tiqdutgkd1rou4jeisllc11</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1.0.14</string>
+	<key>GIDClientID</key>
+	<string>328097407117-tf0hqgah6tiqdutgkd1rou4jeisllc11.apps.googleusercontent.com</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>google</string>
+		<string>com.googleusercontent.apps.367217860626-onsmdj8baecrjn659ham47uelt72ibm6</string>
+		<string>sms</string>
+		<string>tel</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>يُستخدم لالتقاط صور المركبة وإثبات الهوية أثناء التسجيل</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app needs access to your contacts to improve user interaction and communication features.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Allow local network access for Flutter debugging</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>يُستخدم لمتابعة السائق حتى في الخلفية عند وجود رحلة نشطة</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>يُستخدم لمتابعة السائق حتى في الخلفية عند وجود رحلة نشطة</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>YourPurposeKey</key>
+		<string>The example App requires temporary access to the device's precise location.</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>يُستخدم لتحديد موقع السائق بدقة أثناء التوصيل ومتابعة الرحلة في الوقت الحقيقي</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to audio permission.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your gallery photo.</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string> هذا التطبيق يحتاج لإرسال إشعارات إليك لكي يصلك كل جديد!</string>
+	<key>SERVER_CLIENT_ID</key>
+	<string>367217860626-onsmdj8baecrjn659ham47uelt72ibm6.apps.googleusercontent.com</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+</dict>
+</plist>

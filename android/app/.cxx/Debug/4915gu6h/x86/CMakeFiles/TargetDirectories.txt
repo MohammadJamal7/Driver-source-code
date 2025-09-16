@@ -1,0 +1,2 @@
+/Users/adham/StudioProjects/Wdni-Driver/android/app/.cxx/Debug/4915gu6h/x86/CMakeFiles/edit_cache.dir
+/Users/adham/StudioProjects/Wdni-Driver/android/app/.cxx/Debug/4915gu6h/x86/CMakeFiles/rebuild_cache.dir
