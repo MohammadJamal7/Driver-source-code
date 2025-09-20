@@ -12,6 +12,8 @@ import FirebaseCore
   ) -> Bool {
       FirebaseApp.configure()
       GMSServices.provideAPIKey("AIzaSyB6M2CwWg_-UV-OgNawX_0Vl5U21VH23GU")
+      
+      // Set up local notifications callback BEFORE registering plugins
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
             GeneratedPluginRegistrant.register(with: registry)
       }
@@ -19,7 +21,10 @@ import FirebaseCore
       if #available(iOS 10.0, *) {
           UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
       }
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+      
+      // Register plugins AFTER all setup is complete
+      GeneratedPluginRegistrant.register(with: self)
+      
+      return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
