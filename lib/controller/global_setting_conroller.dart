@@ -17,12 +17,26 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 class GlobalSettingController extends GetxController {
   RxBool isLoading = true.obs;
+  
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    notificationInit();
-    getCurrentCurrency();
+    // Delay initialization to ensure Firebase is ready
+    _delayedInit();
+  }
+
+  void _delayedInit() async {
+    // Wait for Firebase to be ready
+    await Future.delayed(const Duration(milliseconds: 1000));
+    
+    try {
+      await notificationInit();
+      await getCurrentCurrency();
+      isLoading.value = false;
+    } catch (e) {
+      log('❌ GlobalSettingController initialization failed', error: e);
+      isLoading.value = false; // Don't block the app
+    }
   }
 
   getCurrentCurrency() async {

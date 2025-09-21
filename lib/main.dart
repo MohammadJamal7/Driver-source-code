@@ -27,17 +27,13 @@ import 'utils/Preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة Firebase مع معالجة الأخطاء المحسّنة
-  await _initializeFirebase();
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-    log('❌ Flutter Error: ${details.exception}', stackTrace: details.stack);
-    print('❌ Flutter Error: ${details.exception}');
-  };
-
+  // Initialize SharedPreferences FIRST
   await Preferences.initPref();
+  
+  // Initialize GetStorage
+  await GetStorage.init();
 
+  // Configure EasyLoading
   EasyLoading.instance
     ..displayDuration = const Duration(seconds: 2)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -49,7 +45,16 @@ void main() async {
     ..userInteractions = false
     ..dismissOnTap = false;
 
-  await GetStorage.init();
+  // Set up error handling
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    log('❌ Flutter Error: ${details.exception}', stackTrace: details.stack);
+    print('❌ Flutter Error: ${details.exception}');
+  };
+
+  // Initialize Firebase LAST
+  await _initializeFirebase();
+
   runApp(const MyApp());
 }
 
@@ -100,6 +105,9 @@ Future<void> _initializeFirebase() async {
 
 Future<bool> _checkInternetConnection() async {
   try {
+    // Add delay to ensure iOS permissions are granted
+    await Future.delayed(const Duration(milliseconds: 500));
+    
     // Use connectivity_plus for more reliable connection detection
     final connectivityResult = await Connectivity().checkConnectivity();
     
@@ -109,7 +117,7 @@ Future<bool> _checkInternetConnection() async {
     
     // Additional verification with actual network request
     final result = await InternetAddress.lookup('google.com').timeout(
-      const Duration(seconds: 5),
+      const Duration(seconds: 3), // Reduced timeout for faster response
     );
     return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
   } on SocketException catch (_) {

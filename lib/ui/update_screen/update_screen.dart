@@ -39,6 +39,9 @@ class _UpdateScreenState extends State<UpdateScreen>
   }
 
   Future<void> checkForUpdates() async {
+    // Add delay to ensure iOS platform is ready
+    await Future.delayed(const Duration(milliseconds: 500));
+    
     String currentVersion = await VersionChecker.getInstalledVersion();
     String? storeVersion = await VersionChecker.getStoreVersion();
     final String storePrintable = storeVersion ?? '<null>';
@@ -159,8 +162,13 @@ class _UpdateScreenState extends State<UpdateScreen>
 
 class VersionChecker {
   static Future<String> getInstalledVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return packageInfo.version;
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.version;
+    } catch (e) {
+      log('❌ Failed to get package info: $e');
+      return '1.0.0'; // Fallback version
+    }
   }
 
   static Future<String> getStoreVersion() async {
