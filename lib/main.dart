@@ -17,6 +17,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'controller/vehicle_information_controller.dart';
 import 'services/localization_service.dart';
@@ -99,6 +100,14 @@ Future<void> _initializeFirebase() async {
 
 Future<bool> _checkInternetConnection() async {
   try {
+    // Use connectivity_plus for more reliable connection detection
+    final connectivityResult = await Connectivity().checkConnectivity();
+    
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
+    }
+    
+    // Additional verification with actual network request
     final result = await InternetAddress.lookup('google.com').timeout(
       const Duration(seconds: 5),
     );

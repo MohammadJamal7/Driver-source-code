@@ -589,8 +589,8 @@ class _MapPreviewWidgetState extends State<MapPreviewWidget>
   bool _mapReady = false;
   StreamSubscription<DocumentSnapshot>? _driverLocationSubscription;
   DriverUserModel? _driverModel;
-  // Use dynamic to be compatible with connectivity_plus streams (single or list)
-  StreamSubscription<dynamic>? _connSub;
+  // Use proper type for connectivity_plus streams
+  StreamSubscription<List<ConnectivityResult>>? _connSub;
   Set<Marker> markers = {};
   // Track previous and current driver positions for bearing calculation
   LatLng? _prevDriverLatLng;
@@ -611,17 +611,23 @@ class _MapPreviewWidgetState extends State<MapPreviewWidget>
     _setupDriverLocationListener();
     
     // Listen to connectivity to recover when coming back online
-    _connSub = Connectivity().onConnectivityChanged.listen((_) {
+    _connSub = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
       if (mounted) {
-        // When connectivity changes, try to rebuild the map and route
-        setState(() {
-          _mapKey = UniqueKey();
-          _mapReady = false;
-        });
-        // Recreate route and camera after rebuild
-        Future.delayed(const Duration(milliseconds: 300), () {
-          _initializeRoute();
-        });
+        // Check if we have any active connection
+        final hasConnection = results.any((result) => result != ConnectivityResult.none);
+        
+        if (hasConnection) {
+          dev.log("🌐 Connectivity restored, rebuilding map");
+          // When connectivity changes, try to rebuild the map and route
+          setState(() {
+            _mapKey = UniqueKey();
+            _mapReady = false;
+          });
+          // Recreate route and camera after rebuild
+          Future.delayed(const Duration(milliseconds: 300), () {
+            _initializeRoute();
+          });
+        }
       }
     });
     dev.log("🚀 MapPreviewWidget initState - Starting route creation");

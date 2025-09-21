@@ -10,8 +10,8 @@ import FirebaseCore
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-      FirebaseApp.configure()
-      GMSServices.provideAPIKey("AIzaSyB6M2CwWg_-UV-OgNawX_0Vl5U21VH23GU")
+      // Configure Google Maps
+      GMSServices.provideAPIKey("AIzaSyCh3-iIiDfJWQOxsJISRaCMj5b2CS_2okw")
       
       // Set up local notifications callback BEFORE registering plugins
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in

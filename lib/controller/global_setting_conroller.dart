@@ -13,6 +13,7 @@ import 'package:driver/utils/fire_store_utils.dart';
 import 'package:driver/utils/notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class GlobalSettingController extends GetxController {
   RxBool isLoading = true.obs;
@@ -72,6 +73,15 @@ class GlobalSettingController extends GetxController {
 
   notificationInit() async {
     try {
+      // Use connectivity_plus for more reliable connection detection
+      final connectivityResult = await Connectivity().checkConnectivity();
+      
+      if (connectivityResult == ConnectivityResult.none) {
+        log("⛔ لا يوجد اتصال بالإنترنت، سيتم تخطي تهيئة الإشعارات");
+        return;
+      }
+      
+      // Additional verification with actual network request
       final result = await InternetAddress.lookup('google.com');
       final hasConnection =
           result.isNotEmpty && result[0].rawAddress.isNotEmpty;
