@@ -44,7 +44,12 @@ class GlobalSettingController extends GetxController {
         .toString()
         .isNotEmpty) {
       LanguageModel? languageModel = Constant.getLanguage();
-      LocalizationService().changeLocale(languageModel!.code.toString());
+      if (languageModel != null) {
+        LocalizationService().changeLocale(languageModel.code.toString());
+      } else {
+        // Fallback to default language if getLanguage() returns null
+        LocalizationService().changeLocale('en');
+      }
     } else {
       await FireStoreUtils.getLanguage().then((value) {
         if (value != null) {

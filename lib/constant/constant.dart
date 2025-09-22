@@ -91,49 +91,83 @@ class Constant {
   }
 
   static String localizationName(List<LanguageName>? name) {
-    if (name!
-        .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-        .name!
-        .isNotEmpty) {
+    if (name == null || name.isEmpty) return "";
+    
+    LanguageModel? currentLang = getLanguage();
+    if (currentLang == null) {
+      // Fallback to English if no language set
+      try {
+        return name.firstWhere((element) => element.type == "en").name ?? "";
+      } catch (e) {
+        return "";
+      }
+    }
+    
+    try {
       return name
-          .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-          .name!;
-    } else {
-      return name.firstWhere((element) => element.type == "en").name.toString();
+          .firstWhere((element) => element.type == currentLang.code)
+          .name ?? "";
+    } catch (e) {
+      // Fallback to English if current language not found
+      try {
+        return name.firstWhere((element) => element.type == "en").name ?? "";
+      } catch (e) {
+        return "";
+      }
     }
   }
 
   static String localizationTitle(List<LanguageTitle>? name) {
-    name = name ?? [];
-    if (name.isNotEmpty &&
-        name
-            .firstWhere(
-                (element) => element.type == Constant.getLanguage()!.code)
-            .title!
-            .isNotEmpty) {
+    if (name == null || name.isEmpty) return "";
+    
+    LanguageModel? currentLang = getLanguage();
+    if (currentLang == null) {
+      // Fallback to English if no language set
+      try {
+        return name.firstWhere((element) => element.type == "en").title ?? "";
+      } catch (e) {
+        return "";
+      }
+    }
+    
+    try {
       return name
-          .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-          .title!;
-    } else {
-      return name.isNotEmpty
-          ? name.firstWhere((element) => element.type == "en").title.toString()
-          : "";
+          .firstWhere((element) => element.type == currentLang.code)
+          .title ?? "";
+    } catch (e) {
+      // Fallback to English if current language not found
+      try {
+        return name.firstWhere((element) => element.type == "en").title ?? "";
+      } catch (e) {
+        return "";
+      }
     }
   }
 
   static String localizationDescription(List<LanguageDescription>? name) {
-    if (name!
-        .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-        .description!
-        .isNotEmpty) {
+    if (name == null || name.isEmpty) return "";
+    
+    LanguageModel? currentLang = getLanguage();
+    if (currentLang == null) {
+      // Fallback to English if no language set
+      try {
+        return name.firstWhere((element) => element.type == "en").description ?? "";
+      } catch (e) {
+        return "";
+      }
+    }
+    
+    try {
       return name
-          .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-          .description!;
-    } else {
-      return name
-          .firstWhere((element) => element.type == "en")
-          .description
-          .toString();
+          .firstWhere((element) => element.type == currentLang.code)
+          .description ?? "";
+    } catch (e) {
+      // Fallback to English if current language not found
+      try {
+        return name.firstWhere((element) => element.type == "en").description ?? "";
+      } catch (e) {
+        return "";
+      }
     }
   }
 
@@ -160,34 +194,56 @@ class Constant {
   }
 
   static String localizationPrivacyPolicy(List<LanguagePrivacyPolicy>? name) {
-    if (name!
-        .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-        .privacyPolicy!
-        .isNotEmpty) {
+    if (name == null || name.isEmpty) return "";
+    
+    LanguageModel? currentLang = getLanguage();
+    if (currentLang == null) {
+      // Fallback to English if no language set
+      try {
+        return name.firstWhere((element) => element.type == "en").privacyPolicy ?? "";
+      } catch (e) {
+        return "";
+      }
+    }
+    
+    try {
       return name
-          .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-          .privacyPolicy!;
-    } else {
-      return name
-          .firstWhere((element) => element.type == "en")
-          .privacyPolicy
-          .toString();
+          .firstWhere((element) => element.type == currentLang.code)
+          .privacyPolicy ?? "";
+    } catch (e) {
+      // Fallback to English if current language not found
+      try {
+        return name.firstWhere((element) => element.type == "en").privacyPolicy ?? "";
+      } catch (e) {
+        return "";
+      }
     }
   }
 
   static String localizationTermsCondition(List<LanguageTermsCondition>? name) {
-    if (name!
-        .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-        .termsAndConditions!
-        .isNotEmpty) {
+    if (name == null || name.isEmpty) return "";
+    
+    LanguageModel? currentLang = getLanguage();
+    if (currentLang == null) {
+      // Fallback to English if no language set
+      try {
+        return name.firstWhere((element) => element.type == "en").termsAndConditions ?? "";
+      } catch (e) {
+        return "";
+      }
+    }
+    
+    try {
       return name
-          .firstWhere((element) => element.type == Constant.getLanguage()!.code)
-          .termsAndConditions!;
-    } else {
-      return name
-          .firstWhere((element) => element.type == "en")
-          .termsAndConditions
-          .toString();
+          .firstWhere((element) => element.type == currentLang.code)
+          .termsAndConditions ?? "";
+    } catch (e) {
+      // Fallback to English if current language not found
+      try {
+        return name.firstWhere((element) => element.type == "en").termsAndConditions ?? "";
+      } catch (e) {
+        return "";
+      }
     }
   }
 

@@ -10,6 +10,9 @@ import FirebaseCore
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+      // Initialize Firebase FIRST
+      FirebaseApp.configure()
+      
       // Configure Google Maps
       GMSServices.provideAPIKey("AIzaSyCh3-iIiDfJWQOxsJISRaCMj5b2CS_2okw")
       

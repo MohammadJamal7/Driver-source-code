@@ -60,32 +60,30 @@ void main() async {
 
 Future<void> _initializeFirebase() async {
   try {
-    // التحقق من وجود تطبيق Firebase افتراضي
+    // Check if Firebase is already initialized (from AppDelegate)
     FirebaseApp? defaultApp;
-
     try {
       defaultApp = Firebase.app();
-      log('✅ Firebase app already exists');
+      log('✅ Firebase app already exists (from AppDelegate)');
+      return; // Firebase already initialized, skip
     } catch (e) {
-      // التطبيق الافتراضي غير موجود، سيتم إنشاؤه
-      log('ℹ️ Default Firebase app not found, initializing...');
+      log('ℹ️ Firebase not initialized yet, initializing from Dart...');
     }
 
-    // إذا لم يكن هناك تطبيق افتراضي، قم بإنشائه
+    // If not initialized, initialize it
     if (defaultApp == null) {
       defaultApp = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ).timeout(
-        const Duration(seconds: 10), // زيادة المهلة الزمنية
+        const Duration(seconds: 10),
         onTimeout: () {
-          throw Exception(
-              'انتهت مهلة تهيئة Firebase - تحقق من الاتصال بالإنترنت');
+          throw Exception('انتهت مهلة تهيئة Firebase - تحقق من الاتصال بالإنترنت');
         },
       );
-      log('✅ Firebase initialized successfully');
+      log('✅ Firebase initialized successfully from Dart');
     }
 
-    // التحقق من حالة Firebase
+    // Verify Firebase is ready
     if (defaultApp.options.projectId.isNotEmpty) {
       log('✅ Firebase is ready with project: ${defaultApp.options.projectId}');
     }
@@ -94,12 +92,11 @@ Future<void> _initializeFirebase() async {
       log('⚠️ Firebase app already exists, continuing...');
     } else {
       log('❌ Firebase initialization failed: ${e.message}', error: e);
-      rethrow;
+      // Don't rethrow in production - let app continue
     }
   } catch (e, stack) {
     log('❌ فشل في تهيئة Firebase', error: e, stackTrace: stack);
-    // لا نرمي الخطأ مرة أخرى لتجنب توقف التطبيق
-    // rethrow;
+    // Don't rethrow - let app continue without Firebase
   }
 }
 
@@ -147,8 +144,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Future<void> _initApp() async {
-    await getCurrentAppTheme();
-    _checkConnectionPeriodically();
+    try {
+      await getCurrentAppTheme();
+      _checkConnectionPeriodically();
+    } catch (e) {
+      log('❌ Error in _initApp: $e');
+      // Continue app initialization even if theme fails
+    }
   }
 
   void _checkConnectionPeriodically() async {
@@ -188,7 +190,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       themeChangeProvider.darkTheme =
           await themeChangeProvider.darkThemePreference.getTheme();
     } catch (e) {
-      log('فشل في الحصول على تفضيلات السمة', error: e);
+      log('❌ فشل في الحصول على تفضيلات السمة: $e');
+      // Set default theme if preferences fail
+      themeChangeProvider.darkTheme = 0; // Default to light theme
     }
   }
 
