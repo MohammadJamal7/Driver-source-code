@@ -60,43 +60,46 @@ void main() async {
 
 Future<void> _initializeFirebase() async {
   try {
-    // Check if Firebase is already initialized (from AppDelegate)
+    // التحقق من وجود تطبيق Firebase افتراضي
     FirebaseApp? defaultApp;
+
     try {
       defaultApp = Firebase.app();
-      log('✅ Firebase app already exists (from AppDelegate)');
-      return; // Firebase already initialized, skip
+      log('✅ Firebase app already exists');
     } catch (e) {
-      log('ℹ️ Firebase not initialized yet, initializing from Dart...');
+      // التطبيق الافتراضي غير موجود، سيتم إنشاؤه
+      log('ℹ️ Default Firebase app not found, initializing...');
     }
 
-    // If not initialized, initialize it
+    // إذا لم يكن هناك تطبيق افتراضي، قم بإنشائه
     if (defaultApp == null) {
       defaultApp = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ).timeout(
-        const Duration(seconds: 10),
+        const Duration(seconds: 10), // زيادة المهلة الزمنية
         onTimeout: () {
           throw Exception('انتهت مهلة تهيئة Firebase - تحقق من الاتصال بالإنترنت');
         },
       );
-      log('✅ Firebase initialized successfully from Dart');
+      log('✅ Firebase initialized successfully');
     }
 
-    // Verify Firebase is ready
+    // التحقق من حالة Firebase
     if (defaultApp.options.projectId.isNotEmpty) {
       log('✅ Firebase is ready with project: ${defaultApp.options.projectId}');
     }
+
   } on FirebaseException catch (e) {
     if (e.code == 'duplicate-app') {
       log('⚠️ Firebase app already exists, continuing...');
     } else {
       log('❌ Firebase initialization failed: ${e.message}', error: e);
-      // Don't rethrow in production - let app continue
+      rethrow;
     }
   } catch (e, stack) {
     log('❌ فشل في تهيئة Firebase', error: e, stackTrace: stack);
-    // Don't rethrow - let app continue without Firebase
+    // لا نرمي الخطأ مرة أخرى لتجنب توقف التطبيق
+    // rethrow;
   }
 }
 

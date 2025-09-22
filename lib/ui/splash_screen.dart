@@ -13,36 +13,7 @@ class SplashScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             backgroundColor: AppColors.primary,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Safe asset loading with fallback
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Icon(
-                      Icons.local_taxi,
-                      size: 100,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "كابتن ودني",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            body: Center(child: Image.asset("assets/app_logo.png",width: 200,)),
           );
         });
   }

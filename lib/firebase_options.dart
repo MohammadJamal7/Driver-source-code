@@ -59,14 +59,14 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCh3-iIiDfJWQOxsJISRaCMj5b2CS_2okw',
+    apiKey: 'AIzaSyB6M2CwWg_-UV-OgNawX_0Vl5U21VH23GU',
     appId: '1:328097407117:ios:19fc6a78b104d5ea09c2c4',
     messagingSenderId: '328097407117',
     projectId: 'wdni-518ff',
     databaseURL: 'https://wdni-518ff-default-rtdb.firebaseio.com',
     storageBucket: 'wdni-518ff.firebasestorage.app',
     androidClientId: '328097407117-1pbo48ep4mi8sgrrj0of6gdntmeo5i3t.apps.googleusercontent.com',
-    iosClientId: '328097407117-tf0hqgah6tiqdutgkd1rou4jeisllc11.apps.googleusercontent.com',
+    iosClientId: '328097407117-brq8hrmp6qo649oa54o45cnu41mk2tqp.apps.googleusercontent.com',
     iosBundleId: 'com.app.wdniDrivers',
   );
 

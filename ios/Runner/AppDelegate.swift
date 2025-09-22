@@ -10,13 +10,8 @@ import FirebaseCore
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-      // Initialize Firebase FIRST
       FirebaseApp.configure()
-      
-      // Configure Google Maps
-      GMSServices.provideAPIKey("AIzaSyCh3-iIiDfJWQOxsJISRaCMj5b2CS_2okw")
-      
-      // Set up local notifications callback BEFORE registering plugins
+      GMSServices.provideAPIKey("AIzaSyB6M2CwWg_-UV-OgNawX_0Vl5U21VH23GU")
       FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
             GeneratedPluginRegistrant.register(with: registry)
       }
@@ -24,10 +19,7 @@ import FirebaseCore
       if #available(iOS 10.0, *) {
           UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
       }
-      
-      // Register plugins AFTER all setup is complete
-      GeneratedPluginRegistrant.register(with: self)
-      
-      return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
