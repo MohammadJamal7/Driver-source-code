@@ -27,7 +27,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../../utils/ride_utils.dart';
  
@@ -589,8 +588,6 @@ class _MapPreviewWidgetState extends State<MapPreviewWidget>
   bool _mapReady = false;
   StreamSubscription<DocumentSnapshot>? _driverLocationSubscription;
   DriverUserModel? _driverModel;
-  // Use proper type for connectivity_plus streams
-  StreamSubscription<List<ConnectivityResult>>? _connSub;
   Set<Marker> markers = {};
   // Track previous and current driver positions for bearing calculation
   LatLng? _prevDriverLatLng;
@@ -610,26 +607,6 @@ class _MapPreviewWidgetState extends State<MapPreviewWidget>
     // Start listening to driver location updates
     _setupDriverLocationListener();
     
-    // Listen to connectivity to recover when coming back online
-    _connSub = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
-      if (mounted) {
-        // Check if we have any active connection
-        final hasConnection = results.any((result) => result != ConnectivityResult.none);
-        
-        if (hasConnection) {
-          dev.log("🌐 Connectivity restored, rebuilding map");
-          // When connectivity changes, try to rebuild the map and route
-          setState(() {
-            _mapKey = UniqueKey();
-            _mapReady = false;
-          });
-          // Recreate route and camera after rebuild
-          Future.delayed(const Duration(milliseconds: 300), () {
-            _initializeRoute();
-          });
-        }
-      }
-    });
     dev.log("🚀 MapPreviewWidget initState - Starting route creation");
     dev.log("📋 Order Status: ${widget.orderModel.status}");
     dev.log(
@@ -663,7 +640,6 @@ class _MapPreviewWidgetState extends State<MapPreviewWidget>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _connSub?.cancel();
     _driverLocationSubscription?.cancel();
     mapController?.dispose();
     super.dispose();

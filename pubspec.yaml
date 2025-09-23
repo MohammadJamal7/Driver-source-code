@@ -84,7 +84,6 @@ dependencies:
   flutter_launcher_icons:
   package_info_plus: ^4.0.2
   get_storage: ^2.1.1
-  connectivity_plus: ^6.1.5
   super_tooltip: ^1.0.0
 
   osm_nominatim: ^3.0.1
